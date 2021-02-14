@@ -41,6 +41,7 @@ export async function getCharacter(id) {
   //},
   //}
   //);
+  //https://http.cat/${id} error: failed to fetch(storybook)
 
   //FALLBACK PLAN. If the id does not exist, this will show up (name of the result (character) + error (not found))
   if (!response.ok) {
@@ -49,7 +50,7 @@ export async function getCharacter(id) {
       imgSrc: "https://http.cat/404",
       name: result.error,
       status: "404 - CAT NOT FOUND! 😾",
-    } as character;
+    };
   }
   //end of fallback plan
   const result = (await response.json()) as APICAT;
