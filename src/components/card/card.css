@@ -1,3 +1,19 @@
-.h1 {
-  background-color: deeppink;
+.card {
+  background-color: hotpink;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 20px;
+  display: grid;
+  color: black;
+  width: 800px;
+  height: 850px;
+}
+.button {
+  border-radius: 20px;
+  font-size: 2rem;
+  color: lemonchiffon;
+  background: deeppink;
+  border: solid 3px purple;
+  padding: 10px 20px;
 }
