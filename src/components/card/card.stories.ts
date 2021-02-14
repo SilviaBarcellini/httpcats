@@ -1,7 +1,7 @@
 import "./card.css";
 import { createCard } from "./card";
 import { createElement } from "../../utils/createElement";
-/* import { cat } from "../../utils/api"; */
+import { getCharacter } from "../../utils/api";
 
 export default {
   title: "Components/Card",
@@ -59,3 +59,13 @@ export const multiple = () => {
   });
   return container;
 };
+
+export const CatFromAPI = (args, { loaded: { cat } }) => {
+  return createCard(cat);
+};
+
+CatFromAPI.loaders = [
+  async () => ({
+    cat: await getCharacter(300),
+  }),
+];
