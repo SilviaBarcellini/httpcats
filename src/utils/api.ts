@@ -1,5 +1,6 @@
 //import { createElement } from "typescript";
 
+//import { createElement } from "typescript";
 //get single character
 //api data is listed ... every li has a value on the card
 export type APICAT = {
@@ -9,7 +10,6 @@ export type APICAT = {
   image: string;
   url: string;
 };
-
 //get multiple characters
 //organize the results in an array []!!!
 export type APICATs = {
@@ -21,7 +21,6 @@ export type APICATs = {
   };
   results: APICAT[];
 };
-
 //CREATE FUNCTION = GET SINGLE CHARACTER
 //get data through API method ... such as bring this data from this address.
 //id is the identification of requested data ... such as number of card
@@ -30,7 +29,6 @@ export async function getCharacter(id) {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/${id}`
   );
-
   //https://http.cat/${id} error: failed to fetch(storybook)
   //SLACK SOLUTION TO ISSUE
   //`https://api.thecatapi.com/v1/images/search?mime_types=gif`,
@@ -41,7 +39,6 @@ export async function getCharacter(id) {
   //},
   //}
   //);
-  //https://http.cat/${id} error: failed to fetch(storybook)
 
   //FALLBACK PLAN. If the id does not exist, this will show up (name of the result (character) + error (not found))
   if (!response.ok) {
@@ -50,7 +47,7 @@ export async function getCharacter(id) {
       imgSrc: "https://http.cat/404",
       name: result.error,
       status: "404 - CAT NOT FOUND! 😾",
-    };
+    } as character;
   }
   //end of fallback plan
   const result = (await response.json()) as APICAT;
@@ -61,7 +58,6 @@ export async function getCharacter(id) {
   };
   return character;
 }
-
 //CREATE FUNCTION = GET MULTIPLE CHARACTERS + MAP RESULTS IN A MAP
 export async function getCharacters() {
   const response = await fetch(`https://rickandmortyapi.com/api/character/`);
