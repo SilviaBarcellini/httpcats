@@ -1,7 +1,7 @@
 import { cat } from "../../utils/api";
 import { createElement } from "../../utils/createElement";
 
-export function createCard({ imgSrc, name, status }: cat) {
+export function createCard({ imgSrc, name, status }) {
   return createElement("article", {
     className: "card",
     children: [
