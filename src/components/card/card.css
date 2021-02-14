@@ -1,6 +1,14 @@
 .card {
-  background-color: deeppink;
+  background-color: hotpink;
   padding: 20px;
   margin: 10px;
   text-align: center;
+}
+.button {
+  border-radius: 20px;
+  font-size: 2rem;
+  color: lemonchiffon;
+  background: deeppink;
+  border: solid 3px purple;
+  padding: 10px 20px;
 }

@@ -1,7 +1,7 @@
 import "./card.css";
 import { createCard } from "./card";
 import { createElement } from "../../utils/createElement";
-import { getCharacter, getCharacters } from "../../utils/api";
+import { character, getCharacter, getCharacters } from "../../utils/api";
 
 export default {
   title: "Components/Card",
@@ -30,7 +30,7 @@ export const cat102 = () =>
   });
 
 export const multiple = () => {
-  const cats = [
+  const cats: character[] = [
     {
       imgSrc: "https://http.cat/100",
       name: "100",
@@ -61,21 +61,39 @@ export const multiple = () => {
 };
 
 //CALL FUNCTION: GET SINGLE CHARACTER
-export const CatFromAPI = (args, { loaded: { cat } }) => {
-  return createCard(cat);
+//export const CatFromAPI = (args, { loaded: { cat } }) => {
+type CatFromAPIProps = {
+  loaded: {
+    character: character;
+  };
+};
+export const CatFromAPI = (
+  args,
+  { loaded: { character } }: CatFromAPIProps
+) => {
+  return createCard(character);
 };
 
 CatFromAPI.loaders = [
   async () => ({
-    cat: await getCharacter(300),
+    cat: await getCharacter(999),
   }),
 ];
 
 //CALL FUNCTION: GET MULTIPLE CHARACTERS + MAP RESULTS IN A CONTAINER
-export const CatsFromAPI = (args, { loaded: { cats } }) => {
+//export const CatsFromAPI = (args, { loaded: { cats } }) => {
+type CatsFromAPIProps = {
+  loaded: {
+    characters: character[];
+  };
+};
+export const CatsFromAPI = (
+  args,
+  { loaded: { characters } }: CatsFromAPIProps
+) => {
   const container = createElement("div", {
     className: "container",
-    children: cats.map((cat) => createCard(cat)),
+    children: characters.map((cat) => createCard(cat)),
   });
   return container;
 };
@@ -85,3 +103,36 @@ CatsFromAPI.loaders = [
     cats: await getCharacters(),
   }),
 ];
+
+//RANDOM CHARACTER!!! LINE 64 + 84 CANNOT EXIST IF RANDOM EXISTS
+export const RandomCharacter = () => {
+  const randomButton = createElement("button", {
+    className: "button",
+    innerText: "Get your daily random cat 😻",
+    onclick: async () => {
+      // generate random character id
+      //mathfloor=no commas + mathrandom 0-1->0-670 +1 in case i do not want any zero
+      const randomCharacterId = Math.floor(Math.random() * 670) + 1;
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_number_between_two_values
+      // getCharacter from API
+      const randomCharacter = await getCharacter(randomCharacterId);
+      // create card-> the character will land in a card
+      const randomCharacterCard = createCard(randomCharacter);
+      // make sure to only display one character
+      //length=max characters displayed in the container
+      //removechild= when i click random the last selected character will replace the previous selected one
+      if (container.childNodes.length > 1) {
+        container.removeChild(container.lastChild);
+      }
+      // append card->the card will be stored inside the container as child
+      container.append(randomCharacterCard);
+      // feel awesome 🐱‍👤
+    },
+  });
+
+  const container = createElement("div", {
+    className: "container",
+    children: [randomButton],
+  });
+  return container;
+};

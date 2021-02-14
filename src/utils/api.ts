@@ -42,6 +42,16 @@ export async function getCharacter(id) {
   //}
   //);
 
+  //FALLBACK PLAN. If the id does not exist, this will show up (name of the result (character) + error (not found))
+  if (!response.ok) {
+    const result = await response.json();
+    return {
+      imgSrc: "https://http.cat/404",
+      name: result.error,
+      status: "404 - CAT NOT FOUND! 😾",
+    } as character;
+  }
+  //end of fallback plan
   const result = (await response.json()) as APICAT;
   const character = {
     imgSrc: result.image,
@@ -54,6 +64,11 @@ export async function getCharacter(id) {
 //CREATE FUNCTION = GET MULTIPLE CHARACTERS + MAP RESULTS IN A MAP
 export async function getCharacters() {
   const response = await fetch(`https://rickandmortyapi.com/api/character/`);
+  //fallback plan for multiple [same as single]
+  if (!response.ok) {
+    return [];
+  }
+  //end of fallback plan for multiple
   const result = (await response.json()) as APICATs;
   const characters = result.results.map((apiCat) => ({
     imgSrc: apiCat.image,
