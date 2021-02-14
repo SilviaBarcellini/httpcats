@@ -1,7 +1,7 @@
 import "./card.css";
 import { createCard } from "./card";
 import { createElement } from "../../utils/createElement";
-import { getCharacter } from "../../utils/api";
+import { getCharacter, getCharacters } from "../../utils/api";
 
 export default {
   title: "Components/Card",
@@ -60,6 +60,7 @@ export const multiple = () => {
   return container;
 };
 
+//CALL FUNCTION: GET SINGLE CHARACTER
 export const CatFromAPI = (args, { loaded: { cat } }) => {
   return createCard(cat);
 };
@@ -67,5 +68,20 @@ export const CatFromAPI = (args, { loaded: { cat } }) => {
 CatFromAPI.loaders = [
   async () => ({
     cat: await getCharacter(300),
+  }),
+];
+
+//CALL FUNCTION: GET MULTIPLE CHARACTERS + MAP RESULTS IN A CONTAINER
+export const CatsFromAPI = (args, { loaded: { cats } }) => {
+  const container = createElement("div", {
+    className: "container",
+    children: cats.map((cat) => createCard(cat)),
+  });
+  return container;
+};
+
+CatsFromAPI.loaders = [
+  async () => ({
+    cats: await getCharacters(),
   }),
 ];
