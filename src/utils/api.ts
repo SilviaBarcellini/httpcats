@@ -1,6 +1,4 @@
 //import { createElement } from "typescript";
-
-//import { createElement } from "typescript";
 //get single character
 //api data is listed ... every li has a value on the card
 export type APICAT = {
